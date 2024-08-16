@@ -1,0 +1,83 @@
+
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:5.0.3
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: development
+      MONGO_INITDB_ROOT_PASSWORD: testpassword
+    volumes:
+      - mongo-data:/data/db
+
+  mongo-express:
+    image: mongo-express:latest
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: development
+      ME_CONFIG_MONGODB_ADMINPASSWORD: testpassword
+      ME_CONFIG_MONGODB_URL: mongodb://development:testpassword@mongo:27017/
+    depends_on:
+      - mongo
+
+  app:
+    build: .
+    container_name: golang-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+
+volumes:
+  mongo-data:
+
+
+# version: '3.8'
+
+# services:
+#   mongo:
+#     image: mongo:5.0.3
+#     ports:
+#       - "27017:27017"
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: development
+#       MONGO_INITDB_ROOT_PASSWORD: testpassword
+#     volumes:
+#       - mongo-data:/data/db
+
+#   mongo-express:
+#     image: mongo-express:latest
+#     ports:
+#       - "8081:8081"
+#     environment:
+#       ME_CONFIG_MONGODB_ADMINUSERNAME: development
+#       ME_CONFIG_MONGODB_ADMINPASSWORD: testpassword
+#       ME_CONFIG_MONGODB_URL: mongodb://development:testpassword@mongo:27017/
+#     depends_on:
+#       - mongo
+
+# volumes:
+#   mongo-data:
+
+
+# services:
+#   mongo:
+#     image: mongo:5.0.3
+#     ports:
+#       - "27017:27017"
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: development
+#       MONGO_INITDB_ROOT_PASSWORD: testpassword
+
+#   mongo-express:
+#     image: mongo-express:latest
+#     ports:
+#       - "8081:8081"
+#     environment:
+#       ME_CONFIG_MONGODB_ADMINUSERNAME: development
+#       ME_CONFIG_MONGODB_ADMINPASSWORD: testpassword
+#       ME_CONFIG_MONGODB_URL: mongodb://development:testpassword@mongo:27017/
+

@@ -1,0 +1,4 @@
+go mod init
+go mod tidy ==> for obtaining missing packages
+
+go run main.go ===> to run the project
